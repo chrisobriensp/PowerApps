@@ -1,0 +1,29 @@
+If(
+    Connection.Connected && !IsEmpty(LocalRecord),
+    ForAll(
+        LocalRecord,
+        Patch(
+            'Flight Ops leave requests',
+            Defaults('Flight Ops leave requests'),
+            {
+                Title: Concatenate(
+                    "Leave Request - ",
+                    User().Email,
+                    " - ",
+                    Text(
+                        Now(),
+                        "[$-en-GB]dd/mm/yyyy hh:mm"
+                    )
+                ),
+                Requestor: currentUser,
+                RequestorStaffNumber: txtRequestorStaffNumber.Text,
+                LeaveRequestType: LeaveType
+            }
+        )
+    );
+    Clear(LocalRecord);
+    Navigate(
+        ConfirmationScreen,
+        ScreenTransition.Fade
+    )
+)

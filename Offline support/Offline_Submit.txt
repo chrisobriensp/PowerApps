@@ -1,0 +1,47 @@
+If(
+    Connection.Connected,
+    Patch(
+        'Flight Ops leave requests',
+        Defaults('Flight Ops leave requests'),
+        {
+            Title: Concatenate(
+                "Leave Request - ",
+                User().Email,
+                " - ",
+                Text(
+                    Now(),
+                    "[$-en-GB]dd/mm/yyyy hh:mm"
+                )
+            ),
+            Requestor: currentUser,
+            RequestorStaffNumber: txtRequestorStaffNumber.Text,
+            LeaveRequestType: LeaveType
+        }
+    );
+    Navigate(
+        ConfirmationScreen,
+        ScreenTransition.Fade
+    ),
+    ClearCollect(
+        LocalRecord,
+        {
+            Title: Concatenate(
+                "Leave Request - ",
+                User().Email,
+                " - ",
+                Text(
+                    Now(),
+                    "[$-en-GB]dd/mm/yyyy hh:mm:ss"
+                )
+            ),
+            Requestor: currentUser,
+            RequestorStaffNumber: txtRequestorStaffNumber.Text,
+            LeaveRequestType: LeaveType
+        }
+    );
+    SaveData(LocalRecord, "LocalRecord");
+    Navigate(
+        PendingScreen,
+        ScreenTransition.Fade
+    )
+)

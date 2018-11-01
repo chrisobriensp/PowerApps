@@ -1,0 +1,10 @@
+Text:
+======
+If(Connection.Connected, "Connection status - connected", "Connection status - NOT connected")
+
+
+
+Fill:
+=====
+If(Connection.Connected, Color.CornflowerBlue, Color.Red)
+
